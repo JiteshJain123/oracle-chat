@@ -78,6 +78,10 @@ app.post("/chat", upload.single("file"), async (req, res) => {
   }
 });
 
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend", "index.html"));
+});
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
