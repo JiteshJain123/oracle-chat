@@ -3,9 +3,12 @@ import cors from "cors";
 import multer from "multer";
 import { PDFParse } from "pdf-parse";
 import { generate } from "./chatbot.js";
+import { fileURLToPath } from "url";
+import path from "path";
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
-const port = 3001;
+const port = process.env.PORT || 3001;
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -22,10 +25,7 @@ const upload = multer({
 
 app.use(cors());
 app.use(express.json());
-
-app.get("/", (req, res) => {
-  res.send("Hello Chatter! backend is running.");
-});
+app.use(express.static(path.join(__dirname, "frontend")));
 
 app.post("/chat", upload.single("file"), async (req, res) => {
   const { message, threadId } = req.body;

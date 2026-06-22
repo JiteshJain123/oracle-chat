@@ -217,7 +217,7 @@ async function CallServer(inputText, file = null) {
         formData.append("threadId", threadId);
         formData.append("file", file);
 
-        const response = await fetch("http://localhost:3001/chat", {
+        const response = await fetch("/chat", {
             method: "POST",
             body: formData, // browser sets Content-Type multipart/form-data with boundary
         });
@@ -226,7 +226,7 @@ async function CallServer(inputText, file = null) {
         return result.message;
     }
 
-    const response = await fetch("http://localhost:3001/chat", {
+    const response = await fetch("/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ threadId, message: inputText }),
