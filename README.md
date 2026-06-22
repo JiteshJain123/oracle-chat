@@ -4,6 +4,9 @@
 
 A full-stack AI chatbot powered by Groq and Meta Llama — with real-time web search, image analysis, and PDF understanding. Built from scratch with Node.js, Express, and Tailwind CSS.
 
+**Live Demo:** [oracle-chat.onrender.com](https://oracle-chat.onrender.com)
+**GitHub:** [github.com/JiteshJain123/oracle-chat](https://github.com/JiteshJain123/oracle-chat)
+
 ---
 
 ## Features
