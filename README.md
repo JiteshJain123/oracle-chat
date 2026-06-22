@@ -103,7 +103,3 @@ oracle-chat/
 Conversations are stored in-memory only and automatically deleted after 24 hours. No personal data is saved to any database.
 
 ---
-
-## License
-
-MIT
