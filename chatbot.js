@@ -6,8 +6,8 @@ const tvly = tavily({ apiKey: process.env.TAVILY_API_KEY });
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 const cache = new NodeCache({ stdTTL: 60 * 60 * 24, checkperiod: 600 }); // 24 hrs
 
-const TEXT_MODEL = "llama-3.1-8b-instant";
-const VISION_MODEL = "meta-llama/llama-4-scout-17b-16e-instruct";
+const TEXT_MODEL = "llama-3.3-70b-versatile";
+const VISION_MODEL = "meta-llama/llama-4-maverick-17b-128e-instruct";
 
 const webSearchTool = {
   type: "function",
