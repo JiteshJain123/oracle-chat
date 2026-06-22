@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ChatDPT</title>
+    <link rel="stylesheet" href="./output.css" />
+  </head>
+
+  <body class="bg-neutral-950 text-white">
+
+    <!-- ── Header ──────────────────────────────────────── -->
+    <header class="fixed top-0 left-0 right-0 z-20 h-14 flex items-center border-b border-white/5 bg-neutral-950/80 backdrop-blur-xl px-4">
+      <div class="mx-auto max-w-4xl w-full flex items-center justify-between">
+
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 bg-white rounded-xl flex items-center justify-center flex-shrink-0">
+            <svg class="w-4 h-4 text-black" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="8" width="18" height="13" rx="2"/>
+              <path d="M9 12v1.5M15 12v1.5M9.5 17h5M12 8V5.5"/>
+              <circle cx="12" cy="4.5" r="1" fill="currentColor" stroke="none"/>
+            </svg>
+          </div>
+          <span class="text-lg font-bold tracking-tight">ChatDPT</span>
+        </div>
+
+        <div class="flex items-center gap-1.5 text-xs text-neutral-500 bg-neutral-800/60 border border-white/5 px-3 py-1.5 rounded-full">
+          <span class="w-1.5 h-1.5 bg-green-500 rounded-full inline-block"></span>
+          <span class="hidden sm:inline">Groq · Llama 4</span>
+          <span class="sm:hidden">Online</span>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- ── Welcome Screen ──────────────────────────────── -->
+    <div id="welcome" class="pt-14 min-h-screen flex flex-col items-center justify-center px-4 py-16 text-center">
+
+      <div class="w-16 h-16 bg-white rounded-3xl flex items-center justify-center mb-6 shadow-lg">
+        <svg class="w-8 h-8 text-black" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="8" width="18" height="13" rx="2"/>
+          <path d="M9 12v1.5M15 12v1.5M9.5 17h5M12 8V5.5"/>
+          <circle cx="12" cy="4.5" r="1" fill="currentColor" stroke="none"/>
+        </svg>
+      </div>
+
+      <h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-3">ChatDPT</h1>
+      <p class="text-neutral-400 text-base sm:text-lg mb-10 max-w-sm">
+        Your intelligent AI assistant with real-time web search and file analysis.
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-2xl">
+        <button data-prompt="What's the latest news today?" class="suggestion text-left bg-neutral-900 hover:bg-neutral-800 border border-white/5 hover:border-white/10 rounded-2xl p-4 transition-all duration-200 group">
+          <p class="text-sm font-semibold text-white mb-1">📰 Latest News</p>
+          <p class="text-xs text-neutral-500 group-hover:text-neutral-400 transition-colors">What's happening in the world right now?</p>
+        </button>
+        <button data-prompt="What is the current weather in Mumbai?" class="suggestion text-left bg-neutral-900 hover:bg-neutral-800 border border-white/5 hover:border-white/10 rounded-2xl p-4 transition-all duration-200 group">
+          <p class="text-sm font-semibold text-white mb-1">🌤️ Weather Update</p>
+          <p class="text-xs text-neutral-500 group-hover:text-neutral-400 transition-colors">Current weather conditions in Mumbai</p>
+        </button>
+        <button data-prompt="Explain quantum computing in simple terms" class="suggestion text-left bg-neutral-900 hover:bg-neutral-800 border border-white/5 hover:border-white/10 rounded-2xl p-4 transition-all duration-200 group">
+          <p class="text-sm font-semibold text-white mb-1">💡 Explain a Concept</p>
+          <p class="text-xs text-neutral-500 group-hover:text-neutral-400 transition-colors">Quantum computing in simple terms</p>
+        </button>
+        <button class="suggestion text-left bg-neutral-900 hover:bg-neutral-800 border border-white/5 hover:border-white/10 rounded-2xl p-4 transition-all duration-200 group" id="upload-hint-btn">
+          <p class="text-sm font-semibold text-white mb-1">📎 Analyze a File</p>
+          <p class="text-xs text-neutral-500 group-hover:text-neutral-400 transition-colors">Upload an image or PDF to analyze</p>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- ── Chat Messages ────────────────────────────────── -->
+    <div id="chat-container" class="mx-auto max-w-4xl px-4 pt-20 pb-36">
+    </div>
+
+    <!-- ── Input Area ───────────────────────────────────── -->
+    <div class="fixed bottom-0 left-0 right-0 z-10">
+      <div class="bg-gradient-to-t from-neutral-950 via-neutral-950 to-transparent h-6 pointer-events-none"></div>
+      <div class="bg-neutral-950 px-4 pb-5">
+        <div class="mx-auto max-w-4xl">
+
+          <!-- File preview strip (shown when file is selected) -->
+          <div id="file-preview" class="hidden mb-2 items-center gap-2 px-1">
+            <!-- Populated by JS -->
+          </div>
+
+          <div class="flex items-end gap-2 bg-neutral-900 border border-white/10 rounded-3xl px-3 py-3 focus-within:border-white/20 transition-colors shadow-2xl">
+
+            <!-- Attach button -->
+            <button id="attach-btn" title="Attach image or PDF"
+              class="w-8 h-8 flex items-center justify-center text-neutral-400 hover:text-white hover:bg-white/10 rounded-full transition-colors flex-shrink-0 mb-0.5">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/>
+              </svg>
+            </button>
+            <input type="file" id="file-input" class="hidden" accept="image/jpeg,image/png,image/gif,image/webp,application/pdf" />
+
+            <textarea
+              id="input"
+              rows="1"
+              placeholder="Message ChatDPT..."
+              class="flex-1 bg-transparent text-white placeholder:text-neutral-500 resize-none outline-none py-1 max-h-32 leading-relaxed text-sm"
+            ></textarea>
+
+            <button id="ask"
+              class="w-8 h-8 bg-white text-black rounded-full flex items-center justify-center flex-shrink-0 hover:bg-neutral-200 transition-colors disabled:opacity-30 disabled:cursor-not-allowed mb-0.5">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </button>
+          </div>
+
+          <p class="text-center text-xs text-neutral-600 mt-2.5">
+            Supports images (JPEG, PNG, WebP) and PDF files up to 5 MB.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
+

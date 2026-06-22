@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Environment variables (contains API keys - never commit)
+.env
+
+# VS Code settings
+.vscode/
+
+# Claude Code memory
+.claude/
+
+# Tailwind generated CSS (rebuild with: npm run build:css)
+frontend/output.css
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
